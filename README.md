@@ -10,4 +10,4 @@ A **reference project** generated from [project-template](https://github.com/pro
 | [Release v0.1.0](https://github.com/project-templates-org/example-project/releases/tag/v0.1.0) | Release notes generated from labels; backup branch `release/v0.1.0` |
 | Settings → Rules / Environments | The 5 rulesets and the development / staging / production environments |
 
-Docs: [docs/](docs/README.md) · Manual setup: [docs/manual-setup-guide.md](docs/manual-setup-guide.md)
+Docs: [docs/](docs/README.md) · Manual setup: [manual setup guide](https://github.com/project-templates-org/project-template/blob/main/docs/manual-setup-guide.md)
