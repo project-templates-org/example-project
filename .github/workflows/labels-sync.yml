@@ -1,0 +1,35 @@
+# Creates/updates repository labels from .github/labels.yml (labels not in the file are left alone).
+name: Labels sync
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/labels.yml]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  labels:
+    name: labels
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Sync labels
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          count=$(yq '. | length' .github/labels.yml)
+          for i in $(seq 0 $((count - 1))); do
+            name=$(yq -r ".[$i].name" .github/labels.yml)
+            color=$(yq -r ".[$i].color" .github/labels.yml)
+            desc=$(yq -r ".[$i].description // \"\"" .github/labels.yml)
+            gh label create "$name" --color "$color" --description "$desc" --force
+          done
